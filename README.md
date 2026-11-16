@@ -1,140 +1,51 @@
-
 # NetPractice
 
-## Description
+## English
 
-NetPractice is a practical networking exercise from the 42 curriculum. The
-project uses a simulated training interface to practise configuring small
-networks. Its main topics are IP addressing, subnet masks, default gateways,
-routers, switches, and the relationship between devices on a network.
+Ten network-configuration exercises about IP addresses, subnet masks, switches, routers, and gateways. The JSON files record settings entered in the supplied training interface.
 
-## Instructions
+### Layout
 
-### Start the training interface
+| Path | Contents |
+| --- | --- |
+| `level1.json–level10.json` | One exported configuration per level |
+| `net_practice/` | Training interface and network simulator |
+| `tests/check_levels.js` | Replay settings through the original simulator |
 
-Download and extract the NetPractice files supplied with the project. From the
-extracted directory, run:
+### Run and test
 
-```sh
-./run.sh
-```
-
-If `run.sh` does not work, start a local web server manually:
+Tests require Node.js and Make. Practice requires Python 3 and a browser. Run from the repository root.
 
 ```sh
-python3 -m http.server 49242
+make test
+python3 -m http.server 49242 --directory net_practice
 ```
 
-Then open <http://localhost:49242> in a web browser. Enter your 42 login to use
-your personal configuration, or use the `evaluation` tab to generate a random
-configuration for practice or evaluation.
+Open `http://localhost:49242` and enter the login `student` to reproduce these boards. `make test` regenerates each board, applies the exported settings, and verifies all 31 communication goals across ten levels. Browser interaction and timed evaluation are separate.
 
-### Complete and export the levels
+See [the detailed guide](docs/GUIDE.md) for the original setup and implementation notes.
 
-1. Complete all 10 levels by filling in the editable network fields.
-2. Select `Check again` to verify each configuration.
-3. After a level is solved, select `Get my config` before moving to the next
-   level.
-4. Save one exported configuration file per level at the repository root.
+## 日本語
 
-The submitted files are:
+IPアドレス・サブネットマスク・スイッチ・ルーター・ゲートウェイを学ぶ、10段階のネットワーク設定課題です。配布された練習画面に入力した設定をJSONで保存しています。
 
-```text
-level1.json
-level2.json
-level3.json
-level4.json
-level5.json
-level6.json
-level7.json
-level8.json
-level9.json
-level10.json
+### 構成
+
+| パス | 内容 |
+| --- | --- |
+| `level1.json–level10.json` | 各レベルの設定データ |
+| `net_practice/` | 配布された練習画面と判定処理 |
+| `tests/check_levels.js` | 保存済み設定を判定処理へ適用するテスト |
+
+### 実行とテスト
+
+テストにはNode.js・Make、練習画面にはPython 3とブラウザが必要です。 リポジトリ直下で実行します。
+
+```sh
+make test
+python3 -m http.server 49242 --directory net_practice
 ```
 
-### Submission requirements
+`http://localhost:49242` を開き、ログイン名 `student` を入力すると同じ課題配置になります。`make test` は各盤面を再生成し、JSONの設定を適用して、10レベル・31件の通信目標を検証します。ブラウザ操作と時間制限付き評価は別途確認します。
 
-The repository must contain 10 exported configuration files at its root, one
-for each level. During the defense, three random levels must be completed within
-the allotted time. External tools are not allowed during the evaluation; a
-simple calculator such as `bc` is tolerated.
-
-### Submission details
-
-Submit the assignment in this Git repository. Only the work within the
-repository will be evaluated during the defense, so double-check the file
-names.
-
-There are 10 levels in the training interface. Submit 10 exported
-configuration files, one for each level, at the repository root:
-
-```text
-level1.json
-level2.json
-level3.json
-level4.json
-level5.json
-level6.json
-level7.json
-level8.json
-level9.json
-level10.json
-```
-
-Enter your login in the training interface and export one file per level with
-`Get my config` after completing it. During the defense, you must successfully
-complete three random levels within the allotted time. External tools are not
-allowed during the evaluation; a simple calculator such as `bc` is tolerated.
-
-## Resources
-
-### Concepts studied
-
-#### TCP/IP addressing
-
-An IPv4 address identifies a network interface so that devices can communicate.
-It is written as four decimal octets, with each octet ranging from 0 to 255.
-The subnet mask or CIDR prefix determines which part identifies the network and which part identifies the host.
-
-#### Network, broadcast, and host addresses
-
-The network address identifies the subnet and is normally not assigned to an ordinary host.
-The broadcast address is used to send traffic to all hosts on an IPv4 subnet.
-The usable host addresses are the addresses between the network and broadcast addresses, subject to the subnet size.
-
-#### Subnet masks and CIDR notation
-
-A subnet mask marks the network bits with 1s and the host bits with 0s.
-CIDR notation expresses the number of network bits after a slash, such as `/24`.
-Changing the prefix length changes the subnet boundary and the number of usable host addresses.
-
-#### Default gateways and routing tables
-
-A default gateway is the next-hop router used when a destination is outside the local subnet.
-A routing table maps destination networks to a gateway or a local network interface.
-When several routes match, the most specific matching route is normally preferred.
-
-#### Routers and switches
-
-A switch connects devices within a local network and forwards Ethernet frames using MAC addresses.
-A router connects different IP networks and forwards packets according to its routing table.
-Correct IP addresses, subnet masks, links, and gateways are all needed for communication between networks.
-
-#### OSI reference model layers
-
-The OSI model separates network communication into seven layers with different responsibilities.
-NetPractice mainly involves the network layer for IP routing and the data-link layer for local connections through switches.
-Using the layers helps explain how addressing, forwarding, and physical or logical connections relate to one another.
-
-### References
-
-- [RFC 791 — Internet Protocol](https://www.rfc-editor.org/rfc/rfc791)
-- [RFC 1918 — Address Allocation for Private Internets](https://www.rfc-editor.org/rfc/rfc1918)
-- [RFC 1122 — Requirements for Internet Hosts](https://www.rfc-editor.org/rfc/rfc1122)
-
-### AI usage
-
-AI was used to review the project requirements, check the repository contents,
-and draft this README. The exported network configuration files were not
-generated by AI; they were produced through the NetPractice training interface
-and must be understood and explained during peer evaluation.
+元の構築手順と設計の説明は[詳細ガイド](docs/GUIDE.md)にまとめています。
