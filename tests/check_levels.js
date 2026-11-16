@@ -2,10 +2,12 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
+// Stable seed for the saved configurations; independent of any user account.
+const savedBoardSeed = 456313;
 const results = [];
 for (let n = 1; n <= 10; n++) {
   const fields = new Map();
-  const context = vm.createContext({console, document: {
+  const context = vm.createContext({console, savedBoardSeed, document: {
     getElementById(id) {
       if (!fields.has(id)) throw new Error('Missing field: ' + id);
       return fields.get(id);
@@ -15,8 +17,8 @@ for (let n = 1; n <= 10; n++) {
     vm.runInContext(fs.readFileSync(path.join(root,'net_practice/js',f),'utf8'),context,{filename:f});
   }
   vm.runInContext(`
-    g_my_login = 'student';
-    g_rand_prev = level + hash_login(g_my_login);
+    g_my_login = 'replay';
+    g_rand_prev = level + savedBoardSeed;
     hosts.forEach(h => routes.forEach(r => {
       if (h.id === r.hid) { get_route_info(r); r.h = h; }
     }));
@@ -61,7 +63,7 @@ for (let n = 1; n <= 10; n++) {
   }
   const goals=vm.runInContext('goals.map(g => ({id:g.id,...sim_goal(g)}))',context);
   if (!goals.length) throw new Error('No goals found');
-  results.push({level:n,login:'student',goals,passed:goals.every(g=>g.status===1)});
+  results.push({level:n,seed:savedBoardSeed,goals,passed:goals.every(g=>g.status===1)});
 }
 for(const r of results)console.log('Level',r.level,r.passed?'PASS':'FAIL',r.goals.map(g=>g.status).join(','));
 if(results.some(r=>!r.passed))process.exitCode=1;

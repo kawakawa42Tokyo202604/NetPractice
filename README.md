@@ -21,7 +21,7 @@ make test
 python3 -m http.server 49242 --directory net_practice
 ```
 
-Open `http://localhost:49242` and enter the login `student` to reproduce these boards. `make test` regenerates each board, applies the exported settings, and verifies all 31 communication goals across ten levels. Browser interaction and timed evaluation are separate.
+Open `http://localhost:49242` to practice with your own login. `make test` uses the fixed board seed saved with these configurations to regenerate each board, applies the exported settings, and verifies all 31 communication goals across ten levels. Browser interaction and timed evaluation are separate.
 
 See [the detailed guide](docs/GUIDE.md) for the original setup and implementation notes.
 
@@ -46,6 +46,6 @@ make test
 python3 -m http.server 49242 --directory net_practice
 ```
 
-`http://localhost:49242` を開き、ログイン名 `student` を入力すると同じ課題配置になります。`make test` は各盤面を再生成し、JSONの設定を適用して、10レベル・31件の通信目標を検証します。ブラウザ操作と時間制限付き評価は別途確認します。
+`http://localhost:49242` を開き、自分のログイン名で練習できます。`make test` は保存済み設定に対応する固定シードで各盤面を再生成し、JSONの設定を適用して、10レベル・31件の通信目標を検証します。ブラウザ操作と時間制限付き評価は別途確認します。
 
 元の構築手順と設計の説明は[詳細ガイド](docs/GUIDE.md)にまとめています。
